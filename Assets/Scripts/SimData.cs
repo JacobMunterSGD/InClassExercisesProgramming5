@@ -1,29 +1,18 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 //Data class used for propagating the details of a Sim when creating them in the simulation.
-[Serializable]
+[System.Serializable]
 public class SimData
 {
     //The name of the Sim.
-    [SerializeField] string simName = "";
-
-    public string SimName
-    {
-        get
-        { 
-            return simName;
-        }
-        set
-        {
-            simName = value;
-        }
-    }
+    public string simName;
 
     //How old the Sim is.
     public int age;
+
+    public int numOfTraits;
 
     //Data used to identify specific types of Traits that Sim entities can have.
     public enum Trait
