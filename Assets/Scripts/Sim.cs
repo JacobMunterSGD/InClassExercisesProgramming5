@@ -5,6 +5,8 @@ using UnityEngine;
 //Monobehaviour script that manages the behaviour of a Sim entity in the simulation.
 public class Sim : MonoBehaviour
 {
+    public Emote emoteUI;
+    public SimData.Need topNeed;
     public TMPro.TMP_Text nameText;
     public TMPro.TMP_Text traitsText;
     public GameObject needVisualPrefab;
@@ -34,9 +36,20 @@ public class Sim : MonoBehaviour
         //Unity colours are a float 0 to 1, Random.Range upper value is EXCLUSIVE
         //so won't generate a value of 1 if the upper range is 1.0 (sigh)
         //(this data doesn't change during play...yet...but is where that will be kept track of)
+        //Also: make a note of the largest need (to visualise it as an emote) Again: not real functionality
+        float highestNeedValue = 0;
         foreach (SimData.Need n in System.Enum.GetValues(typeof(SimData.Need)))
         {
             inSimData.needsMap.Add(n, Random.Range(0, 1.1f));
+
+            //this is silly code to store the largest value
+            //if something was acutally changing these values we'd write a proper function to get the
+            //*current* highest value during game play ;-)
+            if (inSimData.needsMap[n] > highestNeedValue)
+            {
+                highestNeedValue = inSimData.needsMap[n];
+                topNeed = n;
+            }
         }
 
         //Initialise the needs visual using the data in the needs map
@@ -76,5 +89,10 @@ public class Sim : MonoBehaviour
 
         //The direction is normalized to keep the movement speed stable.
         currentDirection.Normalize();
+    }
+
+    private void OnMouseDown()
+    {
+        emoteUI.ShowEmote(topNeed);
     }
 }

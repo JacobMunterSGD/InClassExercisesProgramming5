@@ -26,4 +26,14 @@ public class SimManager : MonoBehaviour
         sim.Initialize(simData);
     }
 
+    public void example()
+    {
+
+        string data = "bob, 23, 4,4";
+        string[] dataArray = data.Split(",");
+        SimData sim = new SimData();
+        sim.simName = dataArray[0];
+        int.TryParse(dataArray[1], out sim.age);
+    }
+
 }

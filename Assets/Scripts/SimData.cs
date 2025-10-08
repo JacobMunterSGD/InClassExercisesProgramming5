@@ -12,8 +12,6 @@ public class SimData
     //How old the Sim is.
     public int age;
 
-    public int numOfTraits;
-
     //Data used to identify specific types of Traits that Sim entities can have.
     public enum Trait
     {
