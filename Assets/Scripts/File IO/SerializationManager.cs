@@ -88,8 +88,8 @@ public class SerializationManager : MonoBehaviour
                 string[] simSplit = json.Split(',');
 
                 string simInfo = $"{simSplit[0]},{simSplit[1]}";
-                sim2.simName = simSplit[0];
-                sim2.age = int.Parse(simSplit[1]);
+                //sim2.simName = simSplit[0];
+                //sim2.age = int.Parse(simSplit[1]);
 
                 string traits = "";
 
@@ -103,11 +103,11 @@ public class SerializationManager : MonoBehaviour
 
                 simInfo += traits;
 
-                sim2.traits = _traits;
+                //sim2.traits = _traits;
 
                 simInfo += simSplit[int.Parse(simSplit[2]) + 4] + simSplit[int.Parse(simSplit[2]) + 5] + simSplit[int.Parse(simSplit[2]) + 6] +simSplit[int.Parse(simSplit[2]) + 7];
 
-                sim2.simColour = new Color(int.Parse(simSplit[2]) + 4, int.Parse(simSplit[2]) + 5, int.Parse(simSplit[2]) + 6, int.Parse(simSplit[2]) + 7);
+                //sim2.simColour = new Color(int.Parse(simSplit[2]) + 4, int.Parse(simSplit[2]) + 5, int.Parse(simSplit[2]) + 6, int.Parse(simSplit[2]) + 7);
 
 
 

@@ -1,16 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 //Data class used for propagating the details of a Sim when creating them in the simulation.
-[System.Serializable]
+[Serializable]
 public class SimData
 {
-    //The name of the Sim.
-    public string simName;
+    public string simName => _simName;
+
+    [SerializeField]
+    private string _simName;
 
     //How old the Sim is.
-    public int age;
+    public int age => _age;
+
+    [SerializeField]
+    private int _age;
 
     //Data used to identify specific types of Traits that Sim entities can have.
     public enum Trait
@@ -18,16 +24,68 @@ public class SimData
         ambitious, cheerful, childish, clumsy, creative, erratic, genius
     }
     //The specific list of Traits on this Sim that are used to dictate how they will hypothetically behave. 
-    public List<Trait> traits = new List<Trait>();
+    public List<Trait> traits => _traits;
 
-    //Data used to identify the specific types of Needs that Sim entities can have.
-    public enum Need
+    [SerializeField]
+    private List<Trait> _traits = new List<Trait>();
+
+    [SerializeField]
+    private List<NeedData> needs = new List<NeedData>();
+
+
+    public Dictionary<NeedData.NeedType, NeedData> needsMap
     {
-        hunger, social, fun, comfort, hygiene, room, bladder, energy
+        get
+        {
+            if (_needsMap == null || _needsMap.Count == 0)
+            {
+                InitializeNeeds();
+            }
+            return _needsMap;
+        }
     }
     //The specific map of Needs on this Sim, along with their initial values.
-    public Dictionary<Need, float> needsMap = new Dictionary<Need, float>();
+    private Dictionary<NeedData.NeedType, NeedData> _needsMap;
 
     //The colour associated with this Sim.
-    public Color simColour;
+    public Color simColour => _simColour;
+
+    [SerializeField]
+    private Color _simColour;
+
+    public NeedData GetNeed(NeedData.NeedType type)
+    {
+        if(!needsMap.ContainsKey(type))
+        {
+            return null;
+        }
+        return needsMap[type];
+    }
+
+    private void InitializeNeeds()
+    {
+        _needsMap = new Dictionary<NeedData.NeedType, NeedData>();
+        foreach(NeedData need in needs)
+        {
+            if(_needsMap.ContainsKey(need.needType))
+            {
+                continue;
+            }
+            _needsMap.Add(need.needType, need);
+        }
+    }
+
+    public void LoadSim(string tempname, int tempage, List<Trait> temptraits, List<KeyValuePair<NeedData.NeedType, NeedData>> tempneedMap, Color tempColor)
+    {
+        _simName = tempname;
+        _age = tempage;
+        _traits = temptraits;
+        _needsMap = new Dictionary<NeedData.NeedType, NeedData>();
+
+        foreach (KeyValuePair<NeedData.NeedType, NeedData> kvp in tempneedMap)
+        {
+            _needsMap[kvp.Key] = kvp.Value;
+        }
+        _simColour = tempColor;
+    }
 }

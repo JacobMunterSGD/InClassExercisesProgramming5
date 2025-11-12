@@ -7,7 +7,7 @@ public class SimSaveData
     public string simName;
     public int age;
     public List<SimData.Trait> traits; //we'll store it as the value, enums are also numbers
-    public List<KeyValuePair<SimData.Need, float>> needsMap;
+    public List<KeyValuePair<NeedData.NeedType, NeedData>> needsMap;
     public float[] simColor;
 
     /// <summary>
@@ -19,10 +19,10 @@ public class SimSaveData
         simName = simData.simName;
         age = simData.age;
         traits = simData.traits;
-        needsMap = new List<KeyValuePair<SimData.Need, float>>();
-        foreach (SimData.Need need in simData.needsMap.Keys)
+        needsMap = new List<KeyValuePair<NeedData.NeedType, NeedData>>();
+        foreach (NeedData.NeedType need in simData.needsMap.Keys)
         {
-            KeyValuePair<SimData.Need, float> kvp = new KeyValuePair<SimData.Need, float>(need, simData.needsMap[need]);
+            KeyValuePair<NeedData.NeedType, NeedData> kvp = new KeyValuePair<NeedData.NeedType, NeedData>(need, simData.needsMap[need]);
             needsMap.Add(kvp);
         }
         simColor = new float[4];
@@ -39,16 +39,7 @@ public class SimSaveData
     public SimData GetSimData()
     {
         SimData simData = new SimData();
-
-        simData.simName = simName;
-        simData.age = age;
-        simData.traits = traits;
-        simData.needsMap = new Dictionary<SimData.Need, float>();
-        foreach (KeyValuePair<SimData.Need, float> kvp in needsMap)
-        {
-            simData.needsMap[kvp.Key] = kvp.Value;
-        }
-        simData.simColour = new Color(simColor[0], simColor[1], simColor[2], simColor[3]);
+        simData.LoadSim(simName, age, traits, needsMap, new Color(simColor[0], simColor[1], simColor[2], simColor[3]));
 
         return simData;
     }

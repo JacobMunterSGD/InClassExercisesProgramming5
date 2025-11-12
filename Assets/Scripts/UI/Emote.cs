@@ -14,7 +14,7 @@ public class Emote : MonoBehaviour
         //since you can see how it will look, instead of it being scaled to zero
         emotionUI.transform.localScale = Vector3.zero;
     }
-    public void ShowEmote(SimData.Need need)
+    public void ShowEmote(NeedData.NeedType need)
     {
         Emotion e = emotionSprites.Find(x => x.name == need);
 
@@ -26,13 +26,13 @@ public class Emote : MonoBehaviour
         //vibrato: how much it oscillates about the target value,
         //default is 10 which looks CRAYYYYYZY for our lil sprite
         //elasticity: damping on the springyness
-        emotionUI.transform.DOPunchScale(Vector3.one, 2, 1, 1).SetEase(Ease.Flash);
+        emotionUI.transform.DOPunchScale(Vector3.one, 2, 1, 1).SetEase(Ease.InFlash);
     }
 }
 
 [System.Serializable]
 public class Emotion
 {
-    public SimData.Need name;
+    public NeedData.NeedType name;
     public Sprite sprite;
 }

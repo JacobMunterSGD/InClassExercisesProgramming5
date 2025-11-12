@@ -38,7 +38,7 @@ public class MainMenu : MonoBehaviour
         sequence.Append(mainMenuUI.transform.DOScale(Vector3.one, 2).SetEase(Ease.OutElastic));
         sequence.Append(Box1.transform.DOScale(Vector3.one, 1).SetEase(Ease.OutBounce));
         Image menuImage = mainMenuUI.GetComponent<Image>();
-        sequence.Append(menuImage.DOFade(0, 1));
+        //sequence.Append(menuImage.DOFade(0, 1));
         sequence.Append(Box2.transform.DOScale(Vector3.one, 2));
         sequence.Append(Box3.transform.DOScale(Vector3.one, 2));
 
